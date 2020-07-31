@@ -1,0 +1,78 @@
+'use strict';
+
+const fs = require('fs');
+
+process.stdin.resume();
+process.stdin.setEncoding('utf-8');
+
+let inputString = '';
+let currentLine = 0;
+
+process.stdin.on('data', function(inputStdin) {
+    inputString += inputStdin;
+});
+
+process.stdin.on('end', function() {
+    inputString = inputString.split('\n');
+
+    main();
+});
+
+function readLine() {
+    return inputString[currentLine++];
+}
+
+/*
+ * Complete the 'gradingStudents' function below.
+ *
+ * The function is expected to return an INTEGER_ARRAY.
+ * The function accepts INTEGER_ARRAY grades as parameter.
+ */
+
+function gradingStudents(grades) {
+    // Write your code here
+//   var roundTo = 5;
+//   var roundAt = 2;
+//   for(var i = 0; i < grades.length; i++) {
+//     if(grades[i] >= 38 && grades[i] % roundTo > roundAt) {
+//       grades[i] = grades[i] + (roundTo - (grades[i] % roundTo));
+//     }
+//   }
+//   return grades;
+//    var g = 0;
+//     while(g < grades.length) {
+//         if (grades[g]%5 >=3 && grades[g] >37) {
+//             grades[g] = grades[g] - grades[g]%5 + 5;
+//         }
+        
+//         ++g;
+//     }
+//     return grades;
+
+for (let i =0; i < grades.length; i++){
+    if(grades[i] % 5 >= 3 && grades[i] > 37) {
+        grades[i] = grades[i] - grades[i]%5 + 5
+    }
+    
+}
+return grades;
+}
+
+function main() {
+    const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
+
+    const gradesCount = parseInt(readLine().trim(), 10);
+
+    let grades = [];
+
+    for (let i = 0; i < gradesCount; i++) {
+        const gradesItem = parseInt(readLine().trim(), 10);
+        grades.push(gradesItem);
+    }
+
+    const result = gradingStudents(grades);
+
+    ws.write(result.join('\n') + '\n');
+
+    ws.end();
+}
