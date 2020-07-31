@@ -1,0 +1,104 @@
+'use strict';
+
+const fs = require('fs');
+
+process.stdin.resume();
+process.stdin.setEncoding('utf-8');
+
+let inputString = '';
+let currentLine = 0;
+
+process.stdin.on('data', inputStdin => {
+    inputString += inputStdin;
+});
+
+process.stdin.on('end', _ => {
+    inputString = inputString.replace(/\s*$/, '')
+        .split('\n')
+        .map(str => str.replace(/\s*$/, ''));
+
+    main();
+});
+
+function readLine() {
+    return inputString[currentLine++];
+}
+function getIndex(char) {
+    var alphabet = ['a', 'b', 'c', 'd', 'e',
+        'f', 'g', 'h', 'i', 'j',
+        'k', 'l', 'm', 'n', 'o',
+        'p', 'q', 'r', 's', 't',
+        'u', 'v', 'w', 'x', 'y',
+        'z'];
+
+    return alphabet.indexOf(char);
+}
+
+// Complete the designerPdfViewer function below.
+function designerPdfViewer(h, word) {
+
+   let height = [], maxValue = 0;
+
+   for(let i = 0; i < word.length; i++) {
+       height.push(h[getIndex(word[i])]);
+   }
+  height = Math.max(...height);
+  maxValue = word.length;
+  return height * maxValue
+
+
+
+
+
+
+
+/*
+
+  // Creating the array of alphabets
+  var alphabetKeys = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+  
+    let values = h,
+        
+    // Using the ES6 reduce function to create an object which associates the input height with each alphabet
+    associated = alphabetKeys.reduce((previous, key, index) => {
+        previous[key] = values[index];
+        return previous
+    }, {});
+    
+    // Storing the height of each letter from the input word
+    let alphaValues = [];
+    
+    // We split the word and then we loop over each alphabet to get its associated height
+    word.split("").map((alphabet) => {
+      if(associated.hasOwnProperty(alphabet)){
+        alphaValues.push(associated[alphabet]);
+      }
+    });
+  
+    // Get the max from the alphaValues array
+    let max = Math.max.apply(null, alphaValues);
+    
+    // We find the total number of alphabets. Since we assume that the width of each alphabet is 1mm, we can add up each alphabet to get
+    // total length.
+    let length = alphaValues.length;
+    
+    // Based on max height and total length, we calculate the area.
+    return max*length;
+    */
+    
+    
+}
+
+function main() {
+    const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
+
+    const h = readLine().split(' ').map(hTemp => parseInt(hTemp, 10));
+
+    const word = readLine();
+
+    let result = designerPdfViewer(h, word);
+
+    ws.write(result + "\n");
+
+    ws.end();
+}
